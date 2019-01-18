@@ -11,16 +11,37 @@ import UIKit
 class TodoListViewController: UITableViewController {
 
     
-    let itemList = ["buy tomatos","study chocolate","kill bees"]
+    var itemList = ["buy tomatos","study chocolate","kill bees"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
     }
-
+  
     
-    
-    
+    @IBAction func addTodoItem(_ sender: Any) {
+        var textInput = UITextField()
+        
+        let alert = UIAlertController.init(title: "Add ToDo Item", message: "", preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.placeholder = "Create new item.."
+             textInput = textField
+        
+            
+        }
+        
+        let action = UIAlertAction.init(title: "Add", style: .default) { (action) in
+//         print(textInput.text)
+            self.itemList.append(textInput.text!)
+            self.tableView.reloadData()
+        }
+        
+        alert.addAction(action)
+        present(alert, animated: true) {
+            
+        }
+        
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell")
         cell?.textLabel?.text = itemList[indexPath.row]
@@ -35,13 +56,9 @@ class TodoListViewController: UITableViewController {
         } else {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         }
-        
-        
-        
-        
+  
        tableView.deselectRow(at: indexPath, animated: true)
       
-        
     }
     
 
